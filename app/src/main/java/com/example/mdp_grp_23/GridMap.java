@@ -94,6 +94,7 @@ public class GridMap extends View{
     static ClipData clipData;
     static Object localState;
     int initialColumn, initialRow;
+    public Canvas canvas;
 
     public GridMap(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -105,12 +106,12 @@ public class GridMap extends View{
         maroonPaint.setColor(getResources().getColor(R.color.brightRed));
         maroonPaint.setStrokeWidth(8);
         obstacleColor.setColor(getResources().getColor(R.color.rockColor));
-        robotColor.setColor(getResources().getColor(R.color.light_blue));
+        robotColor.setColor(getResources().getColor(R.color.lightRed));
         robotColor.setStrokeWidth(2);
         endColor.setColor(Color.RED);
         startColor.setColor(Color.CYAN);
         waypointColor.setColor(Color.GREEN);
-        unexploredColor.setColor(getResources().getColor(R.color.superMarioBlue));
+        unexploredColor.setColor(getResources().getColor(R.color.luigiGreen));
         exploredColor.setColor(getResources().getColor(R.color.exploredColor2));
         arrowColor.setColor(Color.BLACK);
         fastestPathColor.setColor(Color.MAGENTA);
@@ -514,6 +515,21 @@ public class GridMap extends View{
                 cells[x][y].setType("robot");
 
         Logd("Exiting setCurCoord");
+    }
+
+    public void updateRobot(int col, int row, String direction) {
+//        int testCol = col;
+//        int testRow = row;
+//        this.setRobotDirection(direction);
+//        this.updateRobotAxis(testCol, testRow, direction);
+//        this.drawRobot(canvas,curCoord);
+//        curCoord = new int[]{col, row};
+//        robotDirection = direction;
+
+
+//        for (int x = testCol - 1; x <= testCol; x++)
+//            for (int y = row - 1; y <= row; y++)
+//                cells[x][y].setType("robot");
     }
 
     public int[] getCurCoord() {
@@ -1458,15 +1474,15 @@ public class GridMap extends View{
 
         for (int i = 0; i < translateCoords.size(); i++){
             if (i ==  translateCoords.size()-1){
-                msg += ((translateCoords.get(i)[0]) + ","
-                        + (translateCoords.get(i)[1]) + ","
+                msg += ((translateCoords.get(i)[1]) + ","
+                        + (translateCoords.get(i)[0]) + ","
                         + directionArr.get(i));
 
 
             }
             else{
-                msg += ((translateCoords.get(i)[0]) + ","
-                        + (translateCoords.get(i)[1]) + ","
+                msg += ((translateCoords.get(i)[1]) + ","
+                        + (translateCoords.get(i)[0]) + ","
                         + directionArr.get(i)
                         + "|");
             }
@@ -1478,9 +1494,9 @@ public class GridMap extends View{
 
     // wk 8 task
     public boolean updateIDFromRpi(String obstacleID, String imageID) {
-        Logd("starting updateIDFromRpi");
-        int x = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[0];
-        int y = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[1];
+        Logd("updateIDFromRpi");
+        int x = obstacleCoord.get(Integer.parseInt(obstacleID))[0];
+        int y = obstacleCoord.get(Integer.parseInt(obstacleID))[1];
         ITEM_LIST.get(y)[x] = (imageID.equals("-1")) ? "" : imageID;
         this.invalidate();
         return true;

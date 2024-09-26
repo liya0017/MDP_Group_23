@@ -1,7 +1,10 @@
 package com.example.mdp_grp_23;
 
+import static com.example.mdp_grp_23.MainActivity.refreshMessageReceivedNS;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 public class ControlFragment extends Fragment {
@@ -191,6 +195,14 @@ public class ControlFragment extends Fragment {
                     MainActivity.printCoords(msg);
                     MainActivity.stopTimerFlag = false;
                     showToast("Auto Movement/ImageRecog timer start!");
+
+                    //TESTING
+//                        for(int i = 12; i <= 15; i += 1){
+//                            int col = 5;
+//                            String text = "FORWARD|5," + Integer.toString(i) + ",Direction.SOUTH";
+//                            BluetoothCommunications.getMessageReceivedTextView().append(text+"\n");
+//                            gridMap.updateRobot(col, i, "down");
+//                        }
                     robotStatusTextView.setText("Auto Movement Started");
                     exploreTimer = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnableExplore, 0);
@@ -215,7 +227,8 @@ public class ControlFragment extends Fragment {
                 else if (fastestToggleBtn.getText().equals("STOP")) {
                     showToast("Fastest car timer start!");
                     try {
-//                        MainActivity.printMessage("STM|Start");
+//                        MainActivity.printMessage("STM|Start")
+                        refreshMessageReceivedNS("START\n");
                         MainActivity.printMessage("{\"forward_to\":\"STM\",\"message\":\"Start\"}");
                     } catch (Exception e) {
                         showLog(e.getMessage());
